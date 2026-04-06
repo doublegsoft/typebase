@@ -1,0 +1,318 @@
+string:
+  sqlite3: text
+  sqlserver: varchar(${length!'100'})
+  sql: varchar(${length!'100'})
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+
+id:
+  sqlite3: text
+  sqlserver: varchar(64)
+  sql: varchar(64)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+  
+uuid:
+  sqlite3: text
+  sqlserver: varchar(64)
+  sql: varchar(64)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+
+name:
+  sqlite3: text
+  sqlserver: varchar(${length!'200'})
+  sql: varchar(${length!'200'})
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+  
+code:
+  sqlite3: text
+  sqlserver: varchar(${length!'16'})
+  sql: varchar(${length!'16'})
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+  
+enum:
+  sqlite3: text
+  sqlserver: char(${length!'1'})
+  sql: char(${length!'1'})
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+    
+number:
+  sqlite3: numeric
+  sqlserver: decimal(${precision!'12'},${scale!'0'})
+  sql: decimal(${precision!'12'},${scale!'0'})
+  java: BigDecimal
+  typescript: number
+  swift: Double
+  c: double
+  cpp: double
+  objc: NSDecimalNumber*
+  
+byte:
+  java: byte[${length!'32'}]
+  c: char
+  cpp: char
+  
+bit:
+  java: "byte<#if (length?number / 8 > 1)>[${length?number / 8}]</#if>"
+  c: "char<#if (length?number / 8 > 1)>[${length?number / 8}]</#if>"
+  cpp: "char<#if (length?number / 8 > 1)>[${length?number / 8}]</#if>"
+    
+int:
+  sqlite3: integer
+  sqlserver: smallint
+  sql: int
+  java: Integer
+  typescript: number
+  swift: Int
+  c: int
+  cpp: int
+  objc: int
+
+integer:
+  sqlite3: integer
+  sqlserver: smallint
+  sql: int
+  java: Integer
+  typescript: number
+  swift: Int
+  c: int
+  cpp: int
+  objc: int
+
+long:
+  sqlite3: integer
+  sqlserver: bigint
+  sql: bigint
+  java: Long
+  typescript: number
+  swift: Int
+  c: long
+  cpp: long
+  objc: long
+    
+date:
+  sqlite3: text
+  sqlserver: date
+  sql: date
+  java: Date
+  typescript: number
+  c: char
+  cpp: string
+  objc: NSDate*
+    
+time:
+  sqlite3: text
+  sqlserver: date
+  sql: time
+  java: Date
+  typescript: string
+  swift: String
+  objc: NSDate*
+    
+datetime:
+  sqlite3: text
+  sqlserver: datetime
+  sql: datetime
+  java: Timestamp
+  typescript: string
+  swift: String
+  objc: NSDate*
+    
+text:
+  sqlite3: text
+  sqlserver: varbinary
+  java: String
+  typescript: String
+  swift: String
+  c: char
+  cpp: string
+    
+bytes:
+  sqlite3: blob
+  sqlserver: varbinary
+  java: InputStream
+  typescript: number
+  swift: UInt8
+  c: void*
+  cpp: void*
+
+lmt:
+  sqlite3: text
+  sqlserver: datetime
+  sql: datetime
+  java: Date
+  typescript: number
+  swift: String    
+  
+now:
+  sqlite3: text
+  sqlserver: datetime
+  sql: datetime
+  java: Date
+  typescript: number
+  swift: String   
+  c: char
+    
+money:
+  sqlite3: text
+  sqlserver: decimal(20,2)
+  sql: decimal(20,2)
+  java: BigDecimal
+  typescript: number
+  swift: Double
+  c: double
+    
+mobile:
+  sqlite3: text
+  sqlserver: varchar(100)
+  sql: varchar(100)
+  java: String
+  typescript: string
+  swift: String
+    
+mail:
+  sqlite3: text
+  sqlserver: varchar(100)
+  sql: varchar(100)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+email:
+  sqlite3: text
+  sqlserver: varchar(100)
+  sql: varchar(100)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+    
+phone:
+  sqlite3: text
+  sqlserver: varchar(100)
+  sql: varchar(100)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+    
+address:
+  sqlite3: text
+  sqlserver: varchar(400)
+  sql: varchar(400)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+    
+id:
+  sqlite3: text
+  sqlserver: varchar(64)
+  sql: varchar(64)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+    
+password:
+  sqlite3: text
+  sqlserver: varchar(32)
+  sql: varchar(32)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+url:
+  sqlite3: text
+  sqlserver: varchar(400)
+  sql: varchar(400)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+path:
+  sqlite3: text
+  sqlserver: varchar(400)
+  sql: varchar(400)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+state:
+  sqlite3: text
+  sqlserver: char(1)
+  sql: char(1)
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+text:
+  sqlite3: text
+  sqlserver: text
+  sql: text
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+bool:
+  sqlite3: text
+  sqlserver: bit
+  sql: char(1)
+  java: Boolean
+  typescript: string
+  swift: String
+  c: char
+  cpp: bool
+  
+json:
+  sqlite3: text
+  sqlserver: text
+  sql: text
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  
+image:
+  sqlite3: image
+  sqlserver: image
+  sql: image
+  java: byte[]
+  typescript: string
+  swift: String
+  c: char
+  
