@@ -18,7 +18,6 @@
  */
 package io.doublegsoft.typebase;
 
-import com.doublegsoft.jcommons.lang.StringPair;
 import com.doublegsoft.jcommons.metabean.type.CollectionType;
 import com.doublegsoft.jcommons.metabean.type.DomainType;
 import com.doublegsoft.jcommons.metabean.type.ObjectType;
@@ -140,15 +139,19 @@ public class Typebase {
     } else if (ctx.typebase_enum() != null) {
       retVal.setName("enum");
       if (ctx.typebase_enum().typebase_keytext() != null) {
-        List<StringPair> pairs = new ArrayList<>();
+        List<EnumValue> pairs = new ArrayList<>();
         int length = 0;
         for (Typebase_keytextContext ctxTypebaseKeyText : ctx.typebase_enum().typebase_keytext()) {
-          StringPair pair = new StringPair();
+          EnumValue enumVal = new EnumValue();
           String key = ctxTypebaseKeyText.anybase_key().getText();
           length = Math.max(length, key.length());
-          pair.setKey(key);
-          pair.setValue(ctxTypebaseKeyText.name.getText());
-          pairs.add(pair);
+          enumVal.setCode(key);
+          enumVal.setName(ctxTypebaseKeyText.name.getText());
+          if (ctxTypebaseKeyText.text != null) {
+            String text = ctxTypebaseKeyText.text.getText();
+            enumVal.setText(text.substring(1, text.length() - 1));
+          }
+          pairs.add(enumVal);
         }
         retVal.addOption("length", String.valueOf(length));
         retVal.addOption("pairs", pairs);
@@ -294,17 +297,23 @@ public class Typebase {
 //    throw new IllegalArgumentException(type.getName() + "[" + type.toString() + "] is not supported.");
   }
 
-  public List<StringPair> enumtype(String enumDomain) {
+  public List<EnumValue> enumtype(String enumDomain) {
     TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(enumDomain));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     TypebaseParser parser = new TypebaseParser(tokens);
     // parser.setErrorHandler(new BailErrorStrategy());
     TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
-    List<StringPair> retVal = new ArrayList<>();
+    List<EnumValue> retVal = new ArrayList<>();
     ctx.typebase_keytext().forEach(kt -> {
       String key = kt.anybase_key().getText();
-      StringPair pair = new StringPair(key, kt.name.getText());
-      retVal.add(pair);
+      EnumValue enumVal = new EnumValue();
+      enumVal.setCode(key);
+      enumVal.setName(kt.name.getText());
+      if (kt.text != null) {
+        String text = kt.text.getText();
+        enumVal.setText(text.substring(1, text.length() - 1));
+      }
+      retVal.add(enumVal);
     });
     return retVal;
   }
