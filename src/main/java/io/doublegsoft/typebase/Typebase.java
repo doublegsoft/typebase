@@ -435,7 +435,7 @@ public class Typebase {
     if (template == null) {
       return null;
     }
-    Configuration freemarker = new Configuration(Configuration.getVersion());
+    Configuration freemarker = new Configuration(Configuration.VERSION_2_3_34);
     StringTemplateLoader loader = new StringTemplateLoader();
     freemarker.setTemplateLoader(loader);
     loader.putTemplate(name, template);
