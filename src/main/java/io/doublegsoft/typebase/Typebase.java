@@ -64,10 +64,10 @@ public class Typebase {
   public DomainType domainType(String domainType) {
     DomainType retVal = new DomainType(domainType);
     
-    TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(domainType));
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(domainType));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
-    TypebaseParser parser = new TypebaseParser(tokens);
-    TypebaseParser.Typebase_anytypeContext ctx = parser.typebase_anytype();
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser.Typebase_anytypeContext ctx = parser.typebase_anytype();
     
     if (ctx.array != null) {
       retVal.setArray(true);
@@ -143,7 +143,7 @@ public class Typebase {
         int length = 0;
         for (Typebase_keytextContext ctxTypebaseKeyText : ctx.typebase_enum().typebase_keytext()) {
           EnumValue enumVal = new EnumValue();
-          String key = ctxTypebaseKeyText.anybase_key().getText();
+          String key = ctxTypebaseKeyText.anybase_key(0).getText();
           length = Math.max(length, key.length());
           enumVal.setCode(key);
           enumVal.setName(ctxTypebaseKeyText.name.getText());
@@ -298,14 +298,14 @@ public class Typebase {
   }
 
   public List<EnumValue> enumtype(String enumDomain) {
-    TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(enumDomain));
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(enumDomain));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
-    TypebaseParser parser = new TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
     // parser.setErrorHandler(new BailErrorStrategy());
-    TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
+    io.doublegsoft.typebase.TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
     List<EnumValue> retVal = new ArrayList<>();
     ctx.typebase_keytext().forEach(kt -> {
-      String key = kt.anybase_key().getText();
+      String key = kt.anybase_key(0).getText();
       EnumValue enumVal = new EnumValue();
       enumVal.setCode(key);
       enumVal.setName(kt.name.getText());
@@ -319,11 +319,11 @@ public class Typebase {
   }
 
   public List<String> tupletype(String tupleDomain) {
-    TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(tupleDomain));
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(tupleDomain));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
-    TypebaseParser parser = new TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
     // parser.setErrorHandler(new BailErrorStrategy());
-    TypebaseParser.Typebase_tupleContext ctx = parser.typebase_tuple();
+    io.doublegsoft.typebase.TypebaseParser.Typebase_tupleContext ctx = parser.typebase_tuple();
     List<String> retVal = new ArrayList<>();
     ctx.typebase_value().forEach(val -> {
       retVal.add(val.getText());
@@ -342,18 +342,18 @@ public class Typebase {
    * @since 4.0
    */
   public CustomObject customObjectType(String expr) {
-    TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(expr));
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(expr));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
-    TypebaseParser parser = new TypebaseParser(tokens);
-    TypebaseParser.Typebase_custom_objectContext ctx = parser.typebase_custom_object();
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser.Typebase_custom_objectContext ctx = parser.typebase_custom_object();
     return buildCustomObject(ctx);
   }
   
   public CustomObject anonymousObjectType(String expr) {
-    TypebaseLexer lexer = new TypebaseLexer(CharStreams.fromString(expr));
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(expr));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
-    TypebaseParser parser = new TypebaseParser(tokens);
-    TypebaseParser.Typebase_anonymous_objectContext ctx = parser.typebase_anonymous_object();
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser.Typebase_anonymous_objectContext ctx = parser.typebase_anonymous_object();
     return buildCustomObject(ctx);
   }
   
@@ -364,7 +364,7 @@ public class Typebase {
       retVal.addAttribute(ctxKeystr.key.getText(), ctxKeystr.str.getText().substring(1,  ctxKeystr.str.getText().length() - 1));
     }
     if (ctx.typebase_anonymous_object() != null) {
-      for (TypebaseParser.Typebase_attrdeclContext ctxAttrdecl : ctx.typebase_anonymous_object().typebase_attrdecl()) {
+      for (io.doublegsoft.typebase.TypebaseParser.Typebase_attrdeclContext ctxAttrdecl : ctx.typebase_anonymous_object().typebase_attrdecl()) {
        retVal.addChild(buildCustomObject(ctxAttrdecl));
       }
     }
@@ -373,13 +373,13 @@ public class Typebase {
   
   private CustomObject buildCustomObject(Typebase_anonymous_objectContext ctx) {
     CustomObject retVal = new CustomObject();
-    for (TypebaseParser.Typebase_attrdeclContext ctxAttrdecl : ctx.typebase_attrdecl()) {
+    for (io.doublegsoft.typebase.TypebaseParser.Typebase_attrdeclContext ctxAttrdecl : ctx.typebase_attrdecl()) {
       retVal.addChild(buildCustomObject(ctxAttrdecl));
     }
     return retVal;
   }
   
-  private CustomObject buildCustomObject(TypebaseParser.Typebase_attrdeclContext ctx) {
+  private CustomObject buildCustomObject(io.doublegsoft.typebase.TypebaseParser.Typebase_attrdeclContext ctx) {
     CustomObject retVal = new CustomObject();
     retVal.setName(ctx.typebase_anybase_id(0).getText());
     if (ctx.typebase_anybase_id().size() == 2) {
@@ -400,8 +400,6 @@ public class Typebase {
 
   /**
    * Finds the matching type for the specific language.
-   *
-   * @param domain the domain type
    *
    * @param lang the specific language
    *
