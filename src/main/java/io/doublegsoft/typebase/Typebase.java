@@ -186,13 +186,13 @@ public class Typebase {
       retVal.setName("bool");
     }else if (ctx.typebase_any() != null) {
       retVal.setName("any");
-    } else if (ctx.reftype != null) {
+    } else if (ctx.typebase_refobj() != null) {
       retVal.setName("&");
-      retVal.addOption("object", ctx.reftype.getText());
-      if (ctx.typebase_anybase_id() != null) {
+      retVal.addOption("object", ctx.typebase_refobj().reftype.getText());
+      if (ctx.typebase_refobj().typebase_anybase_id() != null) {
         List<String> attrs = new ArrayList<>();
-        for (int i = 0; i < ctx.typebase_anybase_id().size(); i++) {
-          attrs.add(ctx.typebase_anybase_id(i).getText());
+        for (int i = 0; i < ctx.typebase_refobj().typebase_anybase_id().size(); i++) {
+          attrs.add(ctx.typebase_refobj().typebase_anybase_id(i).getText());
         }
         retVal.addOption("attributes", attrs);
       }
