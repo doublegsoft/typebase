@@ -298,23 +298,43 @@ public class Typebase {
   }
 
   public List<EnumValue> enumtype(String enumDomain) {
+    List<EnumValue> retVal = new ArrayList<>();
     io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(enumDomain));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
-    // parser.setErrorHandler(new BailErrorStrategy());
+    io.doublegsoft.typebase.TypebaseParser.Typebase_enum_refContext ctxRef = parser.typebase_enum_ref();
     io.doublegsoft.typebase.TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
-    List<EnumValue> retVal = new ArrayList<>();
-    ctx.typebase_keytext().forEach(kt -> {
-      String key = kt.anybase_key(0).getText();
+    if (ctx != null) {
+      ctx.typebase_keytext().forEach(kt -> {
+        String key = kt.anybase_key(0).getText();
+        EnumValue enumVal = new EnumValue();
+        enumVal.setCode(key);
+        enumVal.setName(kt.name.getText());
+        if (kt.text != null) {
+          String text = kt.text.getText();
+          enumVal.setText(text.substring(1, text.length() - 1));
+        }
+        retVal.add(enumVal);
+      });
+    } else if (ctxRef != null) {
       EnumValue enumVal = new EnumValue();
-      enumVal.setCode(key);
-      enumVal.setName(kt.name.getText());
-      if (kt.text != null) {
-        String text = kt.text.getText();
-        enumVal.setText(text.substring(1, text.length() - 1));
-      }
+      enumVal.setText(ctxRef.text.getText());
+      enumVal.setCode(ctxRef.value.getText());
+      enumVal.setName(ctxRef.object.getText());
       retVal.add(enumVal);
-    });
+    }
+    return retVal;
+  }
+
+  public EnumValue enumref(String enumDomain) {
+    io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(enumDomain));
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
+    io.doublegsoft.typebase.TypebaseParser.Typebase_enum_refContext ctx = parser.typebase_enum_ref();
+    EnumValue retVal = new EnumValue();
+    retVal.setText(ctx.text.getText());
+    retVal.setCode(ctx.value.getText());
+    retVal.setName(ctx.object.getText());
     return retVal;
   }
 
