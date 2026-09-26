@@ -8,6 +8,8 @@ package io.doublegsoft.typebase;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  *
  * @author gg
@@ -100,6 +102,32 @@ public class TypebaseTest {
     Typebase ctx = new Typebase();
     String langtype = ctx.typename("bit(16)", "c");
     Assert.assertEquals("char[2]", langtype);
+  }
+
+  @Test
+  public void test_enum() {
+    Typebase ctx = new Typebase();
+    List<EnumValue> vals = ctx.enumtype("enum[AB:ABAB('AA'),BC:BCBC('BB'),CD:CDCD('CC')]");
+    Assert.assertEquals(3, vals.size());
+    Assert.assertEquals("AB", vals.get(0).getCode());
+    Assert.assertEquals("ABAB", vals.get(0).getName());
+    Assert.assertEquals("AA", vals.get(0).getText());
+    Assert.assertEquals("BC", vals.get(1).getCode());
+    Assert.assertEquals("BCBC", vals.get(1).getName());
+    Assert.assertEquals("BB", vals.get(1).getText());
+    Assert.assertEquals("CD", vals.get(2).getCode());
+    Assert.assertEquals("CDCD", vals.get(2).getName());
+    Assert.assertEquals("CC", vals.get(2).getText());
+  }
+
+  @Test
+  public void test_enum_ref() {
+    Typebase ctx = new Typebase();
+    List<EnumValue> vals = ctx.enumtype("enum[anyobject(hello, world)]");
+    Assert.assertEquals(1, vals.size());
+    Assert.assertEquals("anyobject", vals.get(0).getName());
+    Assert.assertEquals("hello", vals.get(0).getCode());
+    Assert.assertEquals("world", vals.get(0).getText());
   }
 
 }

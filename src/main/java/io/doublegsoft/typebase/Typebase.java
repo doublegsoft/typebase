@@ -302,9 +302,8 @@ public class Typebase {
     io.doublegsoft.typebase.TypebaseLexer lexer = new io.doublegsoft.typebase.TypebaseLexer(CharStreams.fromString(enumDomain));
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     io.doublegsoft.typebase.TypebaseParser parser = new io.doublegsoft.typebase.TypebaseParser(tokens);
-    io.doublegsoft.typebase.TypebaseParser.Typebase_enum_refContext ctxRef = parser.typebase_enum_ref();
-    io.doublegsoft.typebase.TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
-    if (ctx != null) {
+    if (enumDomain.contains(":")) {
+      io.doublegsoft.typebase.TypebaseParser.Typebase_enumContext ctx = parser.typebase_enum();
       ctx.typebase_keytext().forEach(kt -> {
         String key = kt.anybase_key(0).getText();
         EnumValue enumVal = new EnumValue();
@@ -316,7 +315,8 @@ public class Typebase {
         }
         retVal.add(enumVal);
       });
-    } else if (ctxRef != null) {
+    } else {
+      io.doublegsoft.typebase.TypebaseParser.Typebase_enum_refContext ctxRef = parser.typebase_enum_ref();
       EnumValue enumVal = new EnumValue();
       enumVal.setText(ctxRef.text.getText());
       enumVal.setCode(ctxRef.value.getText());
