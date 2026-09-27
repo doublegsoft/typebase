@@ -4,9 +4,11 @@ public class EnumValue {
 
   private String code;
 
+  private String text;
+
   private String name;
 
-  private String text;
+  private String parent;
 
   public EnumValue() {
 
@@ -43,5 +45,13 @@ public class EnumValue {
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public String getParent() {
+    return parent;
+  }
+
+  public void setParent(String parent) {
+    this.parent = parent;
   }
 }

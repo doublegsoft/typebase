@@ -321,6 +321,9 @@ public class Typebase {
       enumVal.setText(ctxRef.text.getText());
       enumVal.setCode(ctxRef.value.getText());
       enumVal.setName(ctxRef.object.getText());
+      if (ctxRef.parent != null) {
+        enumVal.setParent(ctxRef.parent.getText());
+      }
       retVal.add(enumVal);
     }
     return retVal;

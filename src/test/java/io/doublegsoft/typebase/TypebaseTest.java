@@ -130,4 +130,36 @@ public class TypebaseTest {
     Assert.assertEquals("world", vals.get(0).getText());
   }
 
+  @Test
+  public void test_enum_ref_with_parent() {
+    Typebase ctx = new Typebase();
+    List<EnumValue> vals = ctx.enumtype("enum[anyobject(hello, world, parent)]");
+    Assert.assertEquals(1, vals.size());
+    Assert.assertEquals("anyobject", vals.get(0).getName());
+    Assert.assertEquals("hello", vals.get(0).getCode());
+    Assert.assertEquals("world", vals.get(0).getText());
+    Assert.assertEquals("parent", vals.get(0).getParent());
+  }
+
+  @Test
+  public void test_enum_ref_with_special_parent() {
+    Typebase ctx = new Typebase();
+    List<EnumValue> vals = ctx.enumtype("enum[anyobject(hello, world, NNN)]");
+    Assert.assertEquals(1, vals.size());
+    Assert.assertEquals("anyobject", vals.get(0).getName());
+    Assert.assertEquals("hello", vals.get(0).getCode());
+    Assert.assertEquals("world", vals.get(0).getText());
+    Assert.assertEquals("NNN", vals.get(0).getParent());
+  }
+
+  @Test
+  public void test_enum_old() {
+    Typebase ctx = new Typebase();
+    List<EnumValue> vals = ctx.enumtype("enum[AB:ABAB,BC:BCBC,CD:CDCD]");
+    Assert.assertEquals(3, vals.size());
+    Assert.assertEquals("ABAB", vals.get(0).getName());
+    Assert.assertEquals("AB", vals.get(0).getCode());
+    Assert.assertEquals("ABAB", vals.get(0).getText());
+  }
+
 }
