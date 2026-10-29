@@ -84,6 +84,11 @@ public class Typebase {
       if (ctx.typebase_strings().length != null) {
         retVal.addOption("length", ctx.typebase_strings().length.getText());
       }
+    } else if (ctx.typebase_json() != null) {
+      retVal.setName("json");
+      if (ctx.typebase_json().name != null) {
+        retVal.addOption("name", ctx.typebase_json().name.getText());
+      }
     } else if (ctx.typebase_code() != null) {
       retVal.setName("code");
       if (ctx.typebase_code().length != null) {
