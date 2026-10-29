@@ -9,6 +9,17 @@ string:
   cpp: string
   objc: NSString*
 
+strings:
+  sqlite3: text
+  sqlserver: varchar(${length!'200'})
+  sql: varchar(${length!'200'})
+  java: String
+  typescript: string
+  swift: String
+  c: char
+  cpp: string
+  objc: NSString*
+
 id:
   sqlite3: text
   sqlserver: varchar(64)

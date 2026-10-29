@@ -79,6 +79,11 @@ public class Typebase {
       if (ctx.typebase_string().length != null) {
         retVal.addOption("length", ctx.typebase_string().length.getText());
       }
+    } else if (ctx.typebase_strings() != null) {
+      retVal.setName("strings");
+      if (ctx.typebase_strings().length != null) {
+        retVal.addOption("length", ctx.typebase_strings().length.getText());
+      }
     } else if (ctx.typebase_code() != null) {
       retVal.setName("code");
       if (ctx.typebase_code().length != null) {
